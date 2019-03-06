@@ -7,7 +7,113 @@
     <body>
         
         <script>
-        
+            function computerPlay() {
+                let randomizer = Math.random() * 3;
+                return decodeGameChoice(randomizer);
+            }
+
+            function decodeGameChoice(randomizer) {
+                if (randomizer <= 1) {
+                    choice = "Rock";
+                } else if (randomizer <= 2) {
+                    choice = "Paper";
+                } else {
+                    choice = "Scissors";
+                }
+                return choice;
+            }
+
+            function playRound(playerSelection, computerSelection) {
+                if (typeof playerSelection === 'string') {
+                    playerSelection = getCapitalizedWord(playerSelection);
+                    if (playerSelection == "Rock" || playerSelection == "Paper" || playerSelection == "Scissors") {
+                        let result = getResult(playerSelection, computerSelection);
+                        return result;
+                    }
+                }
+
+                return notValidResponse;
+            }
+
+            function getCapitalizedWord(word) {
+                word = word.toLocaleLowerCase();
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            }
+
+            function getResult(playerSelection, computerSelection) {
+                let result;
+                switch (playerSelection) {
+                    case "Rock":
+                        if (computerSelection == "Paper") {
+                            result = lose;
+                        } else if (computerSelection == "Scissors") {
+                            result = win;
+                        } else {
+                            result = tie;
+                        }
+                        break;
+                    case "Paper":
+                        if (computerSelection == "Paper") {
+                            result = tie;
+                        } else if (computerSelection == "Scissors") {
+                            result = lose;
+                        } else {
+                            result = win;
+                        }
+                        break;
+                    default:
+                        if (computerSelection == "Paper") {
+                            result = win;
+                        } else if (computerSelection == "Scissors") {
+                            result = tie;
+                        } else {
+                            result = lose;
+                        }
+                }
+
+                return result;
+            }
+
+            function game() {
+                let winRecord = 0;
+                let lossRecord = 0;
+                let tieRecord = 0;
+
+                for (let i = 0; i < 5; i++) {
+                    const playerSelection = window.prompt("Play rock, paper, scissors. Please enter rock, paper, or scissors.")
+                    const computerSelection = computerPlay();
+                    
+                    let result = playRound(playerSelection, computerSelection); 
+                    if (result == notValidResponse) {
+                        i--;
+                        result += " Please try again.";
+                    } else {
+                        if (result == lose) {
+                            lossRecord++;
+                            result = `You Lose! ${computerSelection} beats ${playerSelection}.`;
+                        } else if (result == win) {
+                            winRecord++;
+                            result = `You Win! ${playerSelection} beats ${computerSelection}.`;
+                        } else {
+                            tieRecord++;
+                            result = `You Tie! You guys both picked ${playerSelection}.`;
+                        }
+                        result += ` ${getRecords(winRecord, lossRecord, tieRecord)}`;
+                    }
+                    console.log(result);
+                    console.log(i);
+                }
+            }
+
+            function getRecords(wins, losses, ties) {
+                return `${wins}-${losses}-${ties}`;
+            }
+
+            const lose = "lose";
+            const win = "win";
+            const tie = "tie";
+            const notValidResponse = "Not a valid selection. The valid options are: rock, paper, scissors.";
+            game();
         </script>
     </body>
 </html>
