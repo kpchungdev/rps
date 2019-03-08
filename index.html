@@ -3,109 +3,36 @@
   <head>
     <meta charset="utf-8">
     <title>Rock, Paper, Scissors</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <script>
-      function computerPlay() {
-        let randomizer = Math.random() * 3;
-          return decodeGameChoice(randomizer);
-        }
-
-      function decodeGameChoice(randomizer) {
-        if (randomizer <= 1) {
-          choice = "Rock";
-        } else if (randomizer <= 2) {
-          choice = "Paper";
-        } else {
-          choice = "Scissors";
-        }
-        return choice;
-      }
-
-      function playRound(playerSelection, computerSelection) {
-        if (typeof playerSelection === 'string') {
-          playerSelection = getCapitalizedWord(playerSelection);
-          if (playerSelection == "Rock" || playerSelection == "Paper" || playerSelection == "Scissors") {
-            let result = getResult(playerSelection, computerSelection);
-            return result;
-          }
-        }
-        return notValidResponse;
-      }
-
-      function getCapitalizedWord(word) {
-        word = word.toLocaleLowerCase();
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      }
-
-      function getResult(playerSelection, computerSelection) {
-        let result;
-        switch (playerSelection) {
-          case "Rock":
-            if (computerSelection == "Paper") {
-              result = lose;
-            } else if (computerSelection == "Scissors") {
-              result = win;
-            } else {
-              result = tie;
-            }
-            break;
-        case "Paper":
-            if (computerSelection == "Paper") {
-              result = tie;
-            } else if (computerSelection == "Scissors") {
-              result = lose;
-            } else {
-              result = win;
-            }
-            break;
-        default:
-            if (computerSelection == "Paper") {
-              result = win;
-            } else if (computerSelection == "Scissors") {
-              result = tie;
-            } else {
-              result = lose;
-            }
-        }
-        return result;
-      }
-
-      function game() {
-        const playerSelection = window.prompt("Play rock, paper, scissors. Please enter rock, paper, or scissors.")
-        const computerSelection = computerPlay();
-                    
-        let result = playRound(playerSelection, computerSelection); 
-          if (result == notValidResponse) {
-            result += " Please try again.";
-          } else {
-            if (result == lose) {
-              lossRecord++;
-              result = `You Lose! ${computerSelection} beats ${playerSelection}.`;
-            } else if (result == win) {
-              winRecord++;
-              result = `You Win! ${playerSelection} beats ${computerSelection}.`;
-            } else {
-              tieRecord++;
-              result = `You Tie! You guys both picked ${playerSelection}.`;
-            }
-            result += ` ${getRecords(winRecord, lossRecord, tieRecord)}`;
-          }
-          console.log(result);
-      }
-
-      function getRecords(wins, losses, ties) {
-        return `${wins}-${losses}-${ties}`;
-      }
-
-      const lose = "lose";
-      const win = "win";
-      const tie = "tie";
-      let loseRecord = 0;
-      let winRecord = 0;
-      let tieRecord = 0;
-      const notValidResponse = "Not a valid selection. The valid options are: rock, paper, scissors.";
-      game();
-    </script>
+    <div class="container">
+        <main class="content">
+          <button class="reset">Reset</button>
+          <p class="round">Round <span class="number">1</span></p>
+          <div class="game_choice_container">
+            <img class="rock choice" src="images/rock.svg" alt="rock">
+            <img class="paper choice" src="images/paper.png" alt="paper">
+            <img class="scissors choice" src="images/scissors.png" alt="scissors">
+          </div>
+          <div class="results_container">
+            <div class="selection_container">
+              <img class="selected" src="images/question_mark.png" alt="player_selection">
+              <img class="selected" src="images/question_mark.png" alt="computer_selection">
+            </div>
+            <p class="score"><span class="win record">0</span> - <span class="lose record">0</span> - <span class="tie record">0</span></p>
+            <p class="response">Start a game!</p>
+            <img class="overall_results" src="https://media.giphy.com/media/ely3apij36BJhoZ234/giphy.gif" alt="overall_results">
+          </div>
+        </main>
+        <footer>
+            <div class="icon_credit">Icons made by <a class="icon_credit" href="https://www.flaticon.com/authors/daniel-bruce" 
+              title="Daniel Bruce">Daniel Bruce</a> from
+              <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by 
+              <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+        </footer>
+    </div>
+    <script type="text/javascript" src="game.js"></script>
   </body>
 </html>
